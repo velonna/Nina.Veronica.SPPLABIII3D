@@ -1,15 +1,13 @@
 
 
-export default class Anuncio {
-    constructor(id, titulo,transaccion,descripcion,precio,puertas,kms,potencia) {
+  class Anuncio {
+      constructor(id, titulo,transaccion,descripcion,precio) {
       this._id = id;
       this._titulo = titulo;
       this._transaccion = transaccion;
       this._descripcion = descripcion;
       this._precio = precio;
-      this._puertas = puertas;
-      this._kms= kms;
-      this.potencia =potencia;
+      
            
     }
     agregar() {
@@ -26,5 +24,13 @@ export default class Anuncio {
     }
 }
 
+export default class Anuncio_Auto extends Anuncio {
+  constructor(id, titulo, transaccion, descripcion, precio, puertas, kms, potencia) {
+      super(id, titulo, transaccion, descripcion, precio);
+      this._puertas = puertas;
+      this._kms= kms;
+      this._potencia =potencia;
 
-export let a =9;
+  }
+}
+export let inicio = 0;

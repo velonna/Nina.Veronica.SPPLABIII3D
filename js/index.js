@@ -1,9 +1,8 @@
-import Anuncio,{a} from './class.js'
+import Anuncio_Auto,{inicio} from './class.js'
 import {autos} from './data.js'
 const spinner = document.getElementById("spinner");
 window.addEventListener("load",inicioParametros);
     const frm = document.forms[0];
-
     const txtTitulo = document.getElementById("txtTitulo");
     const txtId = document.getElementById("idtxt");
     const rdoVenta = document.getElementById("rdoV");
@@ -15,15 +14,15 @@ window.addEventListener("load",inicioParametros);
     const potencia = document.getElementById("txtPotencia");
 
 function inicioParametros(){
-  //  localStorage.clear();
+    localStorage.clear();
     spinner.setAttribute("hidden", "");
     document.getElementById("btnGuadar").addEventListener("click",activarSpinner);
     document.getElementById("btnCancelar").addEventListener("click",limpiarDatos);
-   
-    console.log(a);    
+    document.getElementById("btnModificarDato").hidden = true;
+    txtId.value=inicio;   
 }
 function activarSpinner(){
- //  
+
     spinner.removeAttribute("hidden");
     window.setTimeout(function() {
         cargarDatos();
@@ -44,8 +43,9 @@ function ingresar(e) {
     potencia.value = nodos[7].innerText;
     rdoVenta.value = true;
     puertas.value = nodos[5].innerText;
-    document.getElementById("btnCancelar").hidden = false;
-    frm.addEventListener('submit', manejadorModificar);
+    document.getElementById("btnModificarDato").hidden = false;
+    document.getElementById("btnModificarDato").addEventListener("click",manejadorModificar);
+    
 
 }
 
@@ -67,16 +67,22 @@ function limpiarDatos() {
 }
 function cargarDatos(){
     iniciarLocalStr("listarAutos");
+    const dsAutos = leerDatosDeLoco("listarAutos");
+    try {
+        txtId.value=dsAutos.length +1;
+    } catch (error) {
+        
+        txtId.value=1;
+    }  
     const trans = rdoVenta.value == true?"Venta": "Alquiler";
-    const anuncio = new Anuncio("0",txtTitulo.value,trans,txtDesc.value,txtPrecio.value,puertas.value, kms.value,potencia.value);
-    console.log(anuncio);
-    console.log(a);
+    const anuncio = new Anuncio_Auto(txtId.value,txtTitulo.value,trans,txtDesc.value,txtPrecio.value,puertas.value, kms.value,potencia.value);
+   
     spinner.setAttribute("hidden", "");
     let lista = leerDatosDeLoco("listarAutos");
     lista.push(anuncio);
     borrarDatosDelLoco("listarAutos");
     guardarDatosEnLoco("listarAutos", lista); 
-      
+      return anuncio;
 }
 
 function guardarDatosEnLoco(nombre, array) {
@@ -99,8 +105,8 @@ btnTabla.addEventListener('click',function(){
     const divTabla = document.getElementById('divTabla');
     Array.from(divTabla.childNodes).forEach( child => {divTabla.removeChild(child);});
 
-   // divTabla.appendChild(crearTabla(autos));
     const datosAutos = leerDatosDeLoco("listarAutos");
+ 
     divTabla.appendChild(crearTabla(datosAutos));
 
     const eventosTds = document.getElementsByTagName("td");
@@ -115,6 +121,9 @@ btnTabla.addEventListener('click',function(){
 function crearTabla(lista){   
     const tabla = document.createElement('table');
     tabla.className='table table-bordered table-striped table-hover';
+    if(lista==null){
+        lista=autos;
+    }
     tabla.appendChild(crearCabecera(lista[0]));
     tabla.appendChild(crearCuerpo(lista));
     return tabla;
@@ -149,9 +158,9 @@ function crearCuerpo(lista){
             tr.appendChild(td);
             agregarManejadorTd(td);
         }
-        console.log(element.hasOwnProperty('id'));
-        if(element.hasOwnProperty('id')){
-            tr.setAttribute('data-id',element['id']);
+        console.log(element.hasOwnProperty('_id'));
+        if(element.hasOwnProperty('_id')){
+            tr.setAttribute('data-id',element['_id']);
         }
         agregarManejadorTr(tr);
         tbody.appendChild(tr);
@@ -164,8 +173,6 @@ function agregarManejadorTd(td){
 
     if(td){
         td.addEventListener('click',function(e){
-           
-           console.log(e.target.parentNode.dataset.id);
             e.stopPropagation();
         })
     }
@@ -174,7 +181,6 @@ function agregarManejadorTr(tr){
 
     if(tr){
         tr.addEventListener('click',function(e){
-           // alert(e.target.getAttribute('data-id'));
            alert(e.path[0].dataset.id);
            console.log(e.target);
             
@@ -194,30 +200,26 @@ function borrarDatosDelLoco(list) {
 }
 function modificarAnuncio(anuncio) {
 
-    if (window.confirm("DESEA MODIFICAR ESTE ANUNCIO??")) {
+    if (window.confirm("El registro se modificara, esta seguro?")) {
         let lista = leerDatosDeLoco("listarAutos");
-
         anuncio = cargarDatos(frm, true);
 
         lista.forEach(element => {
-            if (element.id == anuncio.id) {
-                element.titulo = anuncio.titulo;
-                element.transaccion = anuncio.transaccion;
-                element.descripcion = anuncio.descripcion;
-                element.precio = anuncio.precio;
-                element.num_puertas = anuncio.num_puertas;
-                element.num_KMs = anuncio.num_KMs;
-                element.potencia = anuncio.potencia;
+            if (element._id == anuncio._id) {
+                element._titulo = anuncio._titulo;
+                element._transaccion = anuncio._transaccion;
+                element._descripcion = anuncio._descripcion;
+                element._precio = anuncio._precio;
+                element._puertas = anuncio._puertas;
+                element._kms = anuncio._kms;
+                element._potencia = anuncio._potencia;
             }
         });
 
 
         borrarDatosDelLoco("listarAutos");
         guardarDatosEnLoco("listarAutos", lista);
-        document.getElementById("btnBorrar").hidden = true;
-        document.getElementById("btnCancelar").hidden = true;
-
-        frm.removeEventListener('submit', manejadorModificar);
+        document.getElementById("btnModificarDato").hidden = true;
 
     }
 
