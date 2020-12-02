@@ -29,10 +29,7 @@ function activarSpinner(){
       },900);  
 }
 
-
-
-function ingresar(e) {
-	
+function ingresar(e) {	
     let tr = e.target.parentElement;
     let nodos = tr.childNodes;
     txtId.value = nodos[0].innerText;    
@@ -46,7 +43,6 @@ function ingresar(e) {
     document.getElementById("btnModificarDato").hidden = false;
     document.getElementById("btnModificarDato").addEventListener("click",manejadorModificar);
     
-
 }
 
 function manejadorModificar(e) {
@@ -71,7 +67,7 @@ function cargarDatos(){
     try {
         txtId.value=dsAutos.length +1;
     } catch (error) {
-        
+        console.log("error leyendo");
         txtId.value=1;
     }  
     const trans = rdoVenta.value == true?"Venta": "Alquiler";
@@ -93,20 +89,21 @@ function guardarDatosEnLoco(nombre, array) {
 
 function iniciarLocalStr(unalist) {
     let array = new Array();
+    console.log("iniciarLocalStr");
     if (localStorage.getItem(unalist) == null) {
         guardarDatosEnLoco(unalist, array);
+        console.log(unalist);
     }
 }
 
 const btnTabla = document.getElementById('btnGuadar');
 btnTabla.addEventListener('click',function(){
-    event.preventDefault();
-    
+    event.preventDefault();    
     const divTabla = document.getElementById('divTabla');
     Array.from(divTabla.childNodes).forEach( child => {divTabla.removeChild(child);});
 
     const datosAutos = leerDatosDeLoco("listarAutos");
- 
+    console.log(datosAutos);
     divTabla.appendChild(crearTabla(datosAutos));
 
     const eventosTds = document.getElementsByTagName("td");
@@ -115,14 +112,14 @@ btnTabla.addEventListener('click',function(){
             td.addEventListener('click', ingresar);
         }
 
-
 });
 
 function crearTabla(lista){   
     const tabla = document.createElement('table');
-    tabla.className='table table-bordered table-striped table-hover';
+    tabla.className='table table-hover table-dark';
     if(lista==null){
         lista=autos;
+        console.log("Lista vacia");
     }
     tabla.appendChild(crearCabecera(lista[0]));
     tabla.appendChild(crearCuerpo(lista));
@@ -158,9 +155,10 @@ function crearCuerpo(lista){
             tr.appendChild(td);
             agregarManejadorTd(td);
         }
-        console.log(element.hasOwnProperty('_id'));
-        if(element.hasOwnProperty('_id')){
-            tr.setAttribute('data-id',element['_id']);
+        console.log(element.hasOwnProperty('id'));
+        if(element.hasOwnProperty('id')){
+            tr.setAttribute('data-id',element['id']);
+            console.log(element.hasOwnProperty('id'));
         }
         agregarManejadorTr(tr);
         tbody.appendChild(tr);
@@ -196,6 +194,7 @@ function agregarManejadorTr(tr){
 
 function borrarDatosDelLoco(list) {
 
+    console.log(list.agregar());
     localStorage.removeItem(list);
 }
 function modificarAnuncio(anuncio) {
@@ -205,14 +204,14 @@ function modificarAnuncio(anuncio) {
         anuncio = cargarDatos(frm, true);
 
         lista.forEach(element => {
-            if (element._id == anuncio._id) {
-                element._titulo = anuncio._titulo;
-                element._transaccion = anuncio._transaccion;
-                element._descripcion = anuncio._descripcion;
-                element._precio = anuncio._precio;
-                element._puertas = anuncio._puertas;
-                element._kms = anuncio._kms;
-                element._potencia = anuncio._potencia;
+            if (element.id == anuncio.id) {
+                element.titulo = anuncio.titulo;
+                element.transaccion = anuncio.transaccion;
+                element.descripcion = anuncio.descripcion;
+                element.precio = anuncio.precio;
+                element.puertas = anuncio.puertas;
+                element.kms = anuncio.kms;
+                element.potencia = anuncio.potencia;
             }
         });
 

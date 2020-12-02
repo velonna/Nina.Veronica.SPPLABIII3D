@@ -1,24 +1,6 @@
-html {
-    box-sizing: border-box;
-    font-size: 62.5%; /** Reset para REMS - 62.5% = 10px de 16px **/
-}
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-body {
-    font-family: 'Lato', sans-serif;
-    font-size: 1.6rem;
-    line-height: 2;
-}
-
-/** Globales **/
-img {
-    max-width: 100%;
-}
 .contenedor {
-    width:80%;
     max-width: 120rem; /** = 1200px; **/
-    margin: 0 auto;
+    min-width: 300px;
 }
 h1 {
     color: cadetblue;
@@ -26,75 +8,58 @@ h1 {
     margin: 0%;
 }
 
-/** Utilidades **/
-.seccion {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
-
 .centrar-texto {
     text-align: center;
 }
-.d-block {
-    display: block!important;
-}
-.contenido-centrado {
-    max-width: 1000px;
-    min-width: 300px;
-    width: 100vw;
-    height: 80vh;
-    align-items: center;
-}
-.navheader{
-    background-image: url(../img/header.PNG);
+
+
+.divNav{
+    background-image: url(../img/logoHeader.PNG);
     background-repeat: no-repeat;
-    background-position: left;
+    background-color:  #4988c1; 
+    background-size: contain; 
+
 }
 .barra {
     padding: 3rem;
-    background-color:  #4988c1;    
+    background-color:  #4988c1;   
+    min-width: 300px; 
 }
-.divh1class {
-    text-align: center;
-    background-image: url(../img/rueda.gif);
-    background-color:  #4988c1 ;
-}
-.divclass{
-    width:100%; 
-    height: 40vh;
+
+.divclass{ 
+    height: 30vh;
     background-image: url(../img/img.PNG) ;
     background-repeat: no-repeat;
     background-size: cover;
     margin-bottom: 2em;
-    display: flex;  
-    flex-wrap: wrap;
-    flex-direction: row;
+    
 }
 @media (max-width: 668px) {
     .barra {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        min-width: 300px;
     }
     .divclass{
         width:auto; 
         height: auto;
-        background-image: url(../img/img.PNG) ;
-        background-repeat: no-repeat;
-        background-size: cover;
         margin-bottom: 2em;
         display: flex;  
         flex-wrap: wrap;
         flex-direction: column;
+        min-width: 300px;
     }
-    .navheader{
-        background-image: url(../img/header.PNG);
-        background-repeat: no-repeat;
-        background-position: right;
+    h1 {
+        color: cadetblue;
+        text-align: center;
+        margin: 0%;
+        font-size: smaller;
+        
     }
 }
-.divContenedor{
-    
+.divContenedor{/*tabla*/
+    min-width: 300px;
     text-align: center;
 }
 fieldset{
@@ -107,9 +72,9 @@ fieldset{
 .navegacion a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 2.2rem;  
     display: block; 
-    text-align: right;        
+    text-align: right;     
+       
 }
 .contentTrans{
     display: block;
@@ -139,51 +104,11 @@ input[type="radio"]{
     width: auto;
     margin: 0;
 }
-select {
-    -webkit-appearance: none;
-    appearance: none;
-}
 
-table{
-    border-collapse: collapse;
-    margin: auto;
-    width: 50%;
-    }
-table,th,td{
-    border:1px solid cadetblue;
-    padding: 5px;
-    width: auto;
-    }
-td{
-    border: 1px solid black;
-    text-align:center;
-    
-}
-th{
-    background-color: #444;
-    color: #fff;
-}
-tfoot{
-    background-color:#444;
-}
 .center{
     align-items: center;
 }
-.pie{
-    width: 80%;
-    background-color:  #4988c1 ;  
-    margin: 0 auto;
-    padding-bottom: 2em;    
-    padding-left: 2em;
-    padding-right: 1em;
-    padding-top: 2em;
-    align-items: center;
-    color: #ffffff; 
-    display: flex;  
-    flex-wrap: wrap;
-    flex-direction: row;
-    
-}
+
 .spinner,.spinner:after{
     width: 70px;
     height: 70px;
@@ -218,31 +143,19 @@ tfoot{
   }
 }
 
-.pieLeft{
-    
-    width: 60%;
+.pieLeft{    
     display: inline-block;
     
 }
 .pieRigth{
     display: inline-block;
-    width: 30%;    
     text-align: right;
-    padding: 0px;
+    color: #ffffff;
 }
 .navPie a{
    
         color: #ffffff;
         text-decoration: none;
 }
-.divBotones{
-    width:50%;
-    max-width: 120rem; /** = 1200px; **/
-    margin: 0 auto;
-}
-.divTabla{
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
-  
-}
+
+
